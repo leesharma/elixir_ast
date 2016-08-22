@@ -4,20 +4,47 @@ layout: default
 
 <div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+  <h2 class="page-heading">Convert Elixir Code to AST</h2>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+  <main class="page-content">
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
+    <section class="elixir console">
+      <h3 class="section-heading">Elixir Input</h3>
+      <button class="transform" id="to_ast">To AST</button>
+      <textarea id="elixir-input">
+defmodule Greetings do
+  def say_hello(name \\ "World") do
+    "Hello, #{String.capitalize(name)}!"
+  end
+end
+      </textarea>
+    </section>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+    <section class="ast console">
+      <h3 class="section-heading">Abstract Syntax Tree</h3>
+      <button class="transform" id="from_ast">To Elixir</button>
+      <textarea id="ast-output"></textarea>
+    </section>
 
-</div>
+  </div>
+</main>
+
+<script>
+(function () {
+  var elixirInput = document.getElementById("elixir-input"),
+      astOutput   = document.getElementById("ast-output"),
+      elixirInputEditor = CodeMirror.fromTextArea(elixirInput, {
+        lineNumbers: true,
+      }),
+      astOutputEditor = CodeMirror.fromTextArea(astOutput, {
+        readOnly: true,
+      });
+
+  var toASTButton = document.getElementById("to_ast");
+  toASTButton.addEventListener("click", function (e) {
+    var elixir = elixirInputEditor.getValue();
+    alert(elixir);
+  });
+
+}());
+</script>
