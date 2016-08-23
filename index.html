@@ -38,11 +38,23 @@ end
       astOutputEditor = CodeMirror.fromTextArea(astOutput, {
         readOnly: true,
       });
-
   var toASTButton = document.getElementById("to_ast");
+  var url = "https://api.github.com/";
+
+  function get(url) {
+    var conn = new XMLHttpRequest(); // a new request
+
+    conn.open("GET", url, false);
+    conn.send(null);
+    return conn.responseText;
+  };
+
   toASTButton.addEventListener("click", function (e) {
     var elixir = elixirInputEditor.getValue();
+    var res = get(url);
+
     alert(elixir);
+    astOutputEditor.setValue(res);
   });
 
 }());
